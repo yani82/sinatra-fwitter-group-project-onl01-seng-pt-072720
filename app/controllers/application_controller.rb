@@ -7,29 +7,18 @@ class ApplicationController < Sinatra::Base
     set :views, 'app/views'
 
     enable :sessions
-    set :session_secret, "password_security"
+    set :session_secret, "secret"
   end
 
   get '/' do 
-    if is_logged_in? 
-      get '/tweets'
-    else 
+    @user = current_user if is_logged_in? 
 
     erb :index
-    end 
   end 
 
-  helpers do 
+  
 
-    def logged_in?
-      !!session[:user_id]
-    end 
+end
 
-    def current_user 
-      User.find(session[:user_id])
-    end 
-    end 
-
-  end 
 
   
